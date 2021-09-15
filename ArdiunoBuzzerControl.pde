@@ -2,17 +2,36 @@ import processing.serial.*;
 Serial port;
 
 void setup() {
-//print the available serial ports.
+  //ardiuno setup
+  //print the available serial ports.
   printArray(Serial.list());
-//Select port from the listed array.
-//replace [0] to [1],[2]...for selecting a usable open port.
-port = new Serial(this,Serial.list()[0], 9600); } 
-void draw() 
-{   
-if (mousePressed==true) { 
-    port.write('H'); 
-    println("H");
-} else { 
-    port.write('L');   
-}   
-delay(50); }
+  //Select port 
+  port = new Serial(this,Serial.list()[0], 9600); 
+  
+  //processing set up
+  size(500, 500);
+}
+  
+void draw() {   
+  background(0);
+  
+  //send multiple pieces of information to ardiuno using a byte
+  if (mousePressed) { 
+    byte out[] = new byte[2];
+    out[0] = byte(1);
+    out[1] = byte(map(mouseY, 0, 500, 500, 10));
+    port.write(out);
+  } else { 
+    byte out[] = new byte[2];
+    out[0] = byte(0);
+    out[1] = byte(0);
+    port.write(out);
+  }   
+  delay(50); 
+  
+    if(port.available()>0)
+  {
+  println(port.read());
+  delay(50);
+  }
+}
