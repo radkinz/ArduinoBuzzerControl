@@ -1,11 +1,13 @@
 class Walker {
   float x, y, Vx, Vy;
+  color c;
   
-  Walker(float xx, float yy) {
+  Walker(float xx, float yy, color cc) {
     x = xx;
     y = yy;
     Vx = random(100);
     Vy = random(100);
+    c = cc;
   }
   
   void update() {
@@ -18,7 +20,7 @@ class Walker {
   
   void show() {
    strokeWeight(7);
-   stroke(255);
+   stroke(c);
    point(x, y);
   }
 }
