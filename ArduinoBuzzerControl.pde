@@ -1,8 +1,10 @@
 import processing.serial.*;
 Serial port;
 
+ArrayList<Walker> walkers = new ArrayList<Walker>();
+
 void setup() {
-  //arduuino setup
+  //arduino setup
   //print the available serial ports.
   printArray(Serial.list());
   //Select port 
@@ -14,12 +16,36 @@ void setup() {
 
 void draw() {   
   background(0);
+  //delete walkers that are out of bounds
+  if (walkers.size() > 0) {
+    for (int i = walkers.size()-1; i >= 0; i--) {
+      if (walkers.get(i).x < -7 || walkers.get(i).x > width+7 || walkers.get(i).y < -7 || walkers.get(i).y > height+7) {
+        walkers.remove(i);
+      }
+    }
+  }
+  
+  //update walkers if availible
+  if (walkers.size() > 0) {
+    for (int i = 0; i < walkers.size(); i++) {
+      walkers.get(i).update();
+      walkers.get(i).show();
+    }
+  }
 
-  //send multiple pieces of information to ardiuno using a byte
   if (mousePressed) { 
+    //generate walkers
+    for (int i = 0; i < 10; i++) {
+      walkers.add(new Walker(mouseX + random(1), mouseY + random(1)));
+    }
+    
+    //create byte to send multiple pieces of infomation
     byte out[] = new byte[2];
-    out[0] = byte(1);
+    //send state of mouse
+    out[0] = byte(1);  
+    //send frq
     out[1] = byte(map(mouseY, 0, 500, 500, 10));
+    //send out of port to arduino
     port.write(out);
   } else { 
     byte out[] = new byte[2];
@@ -28,10 +54,4 @@ void draw() {
     port.write(out);
   }   
   delay(10); 
-  
-  //check port
-  if (port.available()>0) {
-    println(port.read());
-    delay(10);
-  }
 }
