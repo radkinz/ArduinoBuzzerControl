@@ -2,19 +2,19 @@ import processing.serial.*;
 Serial port;
 
 void setup() {
-  //ardiuno setup
+  //arduuino setup
   //print the available serial ports.
   printArray(Serial.list());
   //Select port 
-  port = new Serial(this,Serial.list()[0], 9600); 
-  
+  port = new Serial(this, Serial.list()[0], 9600); 
+
   //processing set up
   size(500, 500);
 }
-  
+
 void draw() {   
   background(0);
-  
+
   //send multiple pieces of information to ardiuno using a byte
   if (mousePressed) { 
     byte out[] = new byte[2];
@@ -27,11 +27,11 @@ void draw() {
     out[1] = byte(0);
     port.write(out);
   }   
-  delay(50); 
+  delay(10); 
   
-    if(port.available()>0)
-  {
-  println(port.read());
-  delay(50);
+  //check port
+  if (port.available()>0) {
+    println(port.read());
+    delay(10);
   }
 }
