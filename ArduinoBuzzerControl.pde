@@ -6,9 +6,9 @@ ArrayList<Walker> walkers = new ArrayList<Walker>();
 void setup() {
   //arduino setup
   //print the available serial ports.
- // printArray(Serial.list());
+  printArray(Serial.list());
   //Select port 
- // port = new Serial(this, Serial.list()[0], 9600); 
+  port = new Serial(this, Serial.list()[0], 9600); 
 
   //processing set up
   size(500, 500);
@@ -55,12 +55,12 @@ void draw() {
     //send frq
     out[1] = byte(freq);
     //send out of port to arduino
- //   port.write(out);
+    port.write(out);
   } else { 
     byte out[] = new byte[2];
     out[0] = byte(0);
     out[1] = byte(0);
-  //  port.write(out);
+    port.write(out);
   }   
-//  delay(10);
+  delay(10);
 }
