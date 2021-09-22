@@ -42,10 +42,11 @@ void draw() {
 
     //get color by mapping freq to color
     float c = map(freq, 500, 10, 400, 0);
+    color HSBc = color(c, 100, 100);
 
     //generate walkers
     for (int i = 0; i < 10; i++) {
-      walkers.add(new Walker(mouseX + random(1), mouseY + random(1), color(c, 100, 100)));
+      walkers.add(new Walker(mouseX + random(1), mouseY + random(1), HSBc));
     }
 
     //create byte to send multiple pieces of infomation
@@ -55,9 +56,10 @@ void draw() {
     //send frq
     out[1] = byte(freq);
     //send rgb values
-    out[2] = byte(255);
-    out[3] = byte(0);
-    out[4] = byte(255);
+    int[] RGBc = HSBtoRGB(HSBc);
+    out[2] = byte(RGBc[0]);
+    out[3] = byte(RGBc[1]);
+    out[4] = byte(RGBc[2]);
     //send out of port to arduino
     port.write(out);
   } else { 
@@ -70,4 +72,11 @@ void draw() {
     port.write(out);
   }   
   delay(10);
+}
+
+int[] HSBtoRGB(color c) {
+  colorMode(RGB);
+  int[] newc = {round(red(c)), round(green(c)), round(blue(c))};
+  colorMode(HSB);
+  return newc;
 }

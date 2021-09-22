@@ -51,6 +51,10 @@ void loop() {
       for (int i = 0; i < lights_length; i++) {
         digitalWrite(lights[i], LOW);
       }
+      //turn rgb light off
+      digitalWrite(redPin, values[2]);
+      digitalWrite(bluePin,values[4]);
+      digitalWrite(greenPin, values[3]);
       delay(10);
     }
   }
