@@ -2,9 +2,13 @@ int i = 0;
 int pin = 12;
 int duration = 80;
 
-int values[] = {0,0};
+int values[] = {0, 0};
 int lights[] = {5, 6, 7, 9, 10, 8};
-int lights_length = sizeof(lights)/sizeof(int);
+int lights_length = sizeof(lights) / sizeof(int);
+int redPin = 4;   
+int greenPin = 3; 
+int bluePin = 2;  
+
 
 void setup() {
   pinMode(13, OUTPUT);
@@ -16,6 +20,9 @@ void loop() {
     //read serial port
     values[0] = Serial.read();
     values[1] = Serial.read();
+    values[2] = Serial.read();
+    values[3] = Serial.read();
+    values[4] = Serial.read();
 
     int frequency = values[1];
 
@@ -29,10 +36,15 @@ void loop() {
       int max_lights_off = map(frequency, 0, 300, 5, 0);
 
       //turn lights on
-      for (int i = 0; i < (lights_length-max_lights_off); i++) {
+      for (int i = 0; i < (lights_length - max_lights_off); i++) {
         digitalWrite(lights[i], HIGH);
       }
-          
+
+      //turn rgb light on
+      digitalWrite(redPin, values[2]);
+      digitalWrite(bluePin,values[4]);
+      digitalWrite(greenPin, values[3]);
+
       delay(10);
     } else {
       //turn lights off
@@ -44,7 +56,3 @@ void loop() {
   }
   delay(10);
 }
-
-
-
- 
