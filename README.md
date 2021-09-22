@@ -1,7 +1,7 @@
 # Arduino Buzzer Control
 
-An Arduino project that controls a buzzer by outputting frequencies based on the mouse's y-location in processing. Additionally, 
-there are some LEDs that light up based on the frequency values to act as a frequency monitor.
+An Arduino project that controls a buzzer by outputting frequencies based on the mouse's y-location in processing. Additionally, there are some LEDs that light up based on the frequency values to act as a frequency monitor. When the user presses the mouse, a group of particles unleash to create generative art as they move across the screen with velocites determined by perlin noise. The color of the particles are determined by the y-pos by mapping the y-values to a hue range of 0-255. The color of the particles is also outputted in a rgb light in the circuit. Lastly there is a yellow LED light in the corner of the circuit that lights up at the beginning of every program run.
+
 
 # Images/Videos
 
